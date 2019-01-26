@@ -10,7 +10,13 @@ data, if available, upon saving the post
 - Adds a div of available EXIF data (date taken, camera, lens, aperture, shutter speed, focal 
 length, ISO) to the post content upon single-post display
 - Adds product links, albums, and keywords, if they are available, below post content upon 
-single-post display
+single-post display; if no product links are present, displays a "contact me with requests"
+message instead
+- Display-only field on photo posts will hide product links / request message for that post
+if checked
+- Support for query var "prints=true" (or false) to query photos with(out) product links
+- "Featured" field on photo posts with support for query var "featured=true" (or false)
+- Support for ordering photo posts by date taken with "orderby=timestamp"
 
 Further display customization is up to the theme in use. The idea is for this to allow a blog 
 to include single-image posts and have most of the content automatically populated from the 
@@ -23,3 +29,8 @@ as needed.
 As long as the date taken meta field is in a format accepted by php's `strtotime` function, 
 it should display properly in the EXIF block. (Note that it displays day, month, and year, 
 even if, e.g., you only enter year and month.)
+
+If you prefer a different style of EXIF display, the EXIF block is added with 
+`add_filter( 'the_content', 'pk_display_exif' )` and should be removable with a 
+`remove_filter` call with the same arguments. There is a function available, 
+`pk_get_exif_array`, which takes the post ID and returns an array of EXIF data.
