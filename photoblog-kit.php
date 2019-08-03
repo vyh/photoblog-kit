@@ -2,7 +2,7 @@
 /*
 Plugin Name: Photoblog Kit
 Description: Post types, taxonomies, and tools for a photography blog. Exif data icons courtesy icons8.com.
-Version: 0.1.4
+Version: 0.1.5
 Author: Nicki Hoffman
 Author URI: https://arestelle.net
 Text Domain: photoblog-kit
@@ -380,17 +380,17 @@ add_action('wp_enqueue_scripts', 'pk_set_up_styles');
  *  For photo posts, we'll add the exif div (if available) to the top right of the post content.
  *  If this is not desired, use remove_filter to un-hook the function.
  */
-function pk_display_exif( $title, $post_id ) {
+function pk_display_exif( $content, $post_id = null ) {
     // only try to add exif on photo posts
     $post_type = get_post_type( $post_id );
     if ( $post_type !== 'photos' || ! is_single() )
-        return $title;
+        return $content;
 
     $exif = pk_get_exif_formatted( $post_id );
     if ( $exif )
-        return $exif . "\n" . $title;
+        return $exif . "\n" . $content;
     else
-        return $title;
+        return $content;
 }
 add_filter( 'the_content', 'pk_display_exif' );
 
